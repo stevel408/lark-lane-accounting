@@ -1,0 +1,148 @@
+<?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+// Use absolute path relative to this script to avoid CWD issues
+$path_to_root = realpath(__DIR__ . "/..");
+
+// FrontAccounting installation variables - matches docker-compose.yml
+$db_host = 'db';
+$db_user = 'fa_user';
+$db_pass = 'fa_password';
+$db_name = 'frontacc';
+$company_name = 'FrontAccounting Demo';
+$admin_password = 'password';
+
+// Setup environment
+if (!defined('TB_PREF')) define('TB_PREF', '0_');
+
+// Include FA installation session handler
+require_once($path_to_root . "/install/isession.inc");
+
+// Include additional required FA files
+require_once($path_to_root . "/includes/db/connect_db.inc");
+require_once($path_to_root . "/admin/db/maintenance_db.inc");
+require_once($path_to_root . "/admin/db/company_db.inc");
+require_once($path_to_root . "/admin/db/users_db.inc");
+
+$connection = array(
+    'host' => $db_host,
+    'port' => '3306',
+    'dbuser' => $db_user,
+    'dbpassword' => $db_pass,
+    'dbname' => $db_name,
+    'collation' => 'utf8_unicode_ci',
+    'tbpref' => '',
+    'name' => $company_name
+);
+
+echo "Connecting to database...\n";
+global $db;
+$db = db_create_db($connection);
+if (!$db) {
+    die("Error: Could not connect to or create database.\n");
+}
+
+echo "Database connected. Encoding: " . db_get_charset($db) . "\n";
+
+$sql_file = $path_to_root . '/sql/en_US-new.sql';
+echo "Importing schema from $sql_file...\n";
+
+// We'll wrap db_import to capture errors and be more verbose
+function debug_db_import($filename, $connection) {
+    global $db;
+    
+    // Explicitly check if file exists and is readable
+    if (!is_readable($filename)) {
+        echo "Error: SQL file is not readable.\n";
+        return false;
+    }
+    
+    $lines = file($filename);
+    echo "Total lines in SQL file: " . count($lines) . "\n";
+    
+    // We'll use the original db_import but with $return_errors = true
+    $result = db_import($filename, $connection, true, true, false, true);
+    
+    if (is_array($result)) {
+        echo "SQL Import encountered errors:\n";
+        foreach ($result as $err) {
+            echo "Line {$err[1]}: {$err[0]}\n";
+        }
+        return false;
+    } elseif ($result === true) {
+        echo "SQL Import reported success.\n";
+        return true;
+    } else {
+        echo "SQL Import failed with unknown error.\n";
+        return false;
+    }
+}
+
+if (!debug_db_import($sql_file, $connection)) {
+    die("Error: Database import failed.\n");
+}
+
+// Verify tables
+$res = db_query("SHOW TABLES LIKE '0_users'");
+if (db_num_rows($res) == 0) {
+    echo "CRITICAL ERROR: 0_users table was NOT created even though import reported success!\n";
+    
+    // Let's try to list all tables
+    $res = db_query("SHOW TABLES");
+    echo "Tables in database:\n";
+    while ($row = db_fetch_row($res)) {
+        echo "- " . $row[0] . "\n";
+    }
+    die("Aborting due to missing tables.\n");
+} else {
+    echo "Verified: 0_users table exists.\n";
+}
+
+echo "Configuring company and admin user...\n";
+// update_company_prefs uses $_SESSION['SysPrefs']
+$SysPrefs->refresh(); // Initialize with DB values
+
+if (!update_company_prefs(array('coy_name' => $company_name))) {
+    echo "Warning: Could not update company name.\n";
+}
+
+$admin = get_user_by_login('admin');
+if ($admin) {
+    echo "Updating admin password...\n";
+    if (!update_user_prefs($admin['id'], array(
+        'password' => md5($admin_password)
+    ))) {
+        echo "Warning: Could not update admin password.\n";
+    }
+} else {
+    echo "Warning: Admin user not found in database.\n";
+}
+
+echo "Writing configuration files...\n";
+if (!file_exists($path_to_root . "/config.php")) {
+    if (!copy($path_to_root . "/config.default.php", $path_to_root . "/config.php")) {
+        die("Error: Could not create config.php\n");
+    }
+}
+
+// Prepare for write_config_db
+global $def_coy, $db_connections, $tb_pref_counter;
+$def_coy = 0;
+$tb_pref_counter = 0;
+$db_connections = array(
+    0 => $connection
+);
+
+$res = write_config_db(false);
+if ($res != 0) {
+    die("Error: Could not write config_db.php (Code: $res)\n");
+}
+
+echo "Installation complete!\n";
+
+// Flush output
+while (ob_get_level() > 0) {
+    ob_end_flush();
+}
+?>

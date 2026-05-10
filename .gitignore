@@ -19,3 +19,12 @@ installed_extensions.php
 config.php
 config_db.php
 !index.php
+
+# Docker
+.docker_id
+
+# Generated files
+/install_bak
+/company/*/js_cache/*
+/tmp/errors.log
+/tmp/*.log

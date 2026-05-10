@@ -12,7 +12,7 @@
 
 include_once($path_to_root . "/includes/prefs/userprefs.inc");
 if (!defined('TB_PREF')) {
-	define('TB_PREF', '&TB_PREF&');
+	define('TB_PREF', '0_');
 }
 //--------------------------------------------------------------------------
 

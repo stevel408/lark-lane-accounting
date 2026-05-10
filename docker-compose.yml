@@ -1,0 +1,38 @@
+services:
+  web:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    ports:
+      - "8080:80"
+    volumes:
+      - .:/var/www/html
+      - ./docker/php.ini:/usr/local/etc/php/conf.d/frontaccounting.ini
+    environment:
+      - TZ=UTC
+    depends_on:
+      - db
+
+  db:
+    image: mariadb:10.5
+    # FrontAccounting requires InnoDB, which is default in MariaDB
+    volumes:
+      - db_data:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_DATABASE=frontacc
+      - MYSQL_USER=fa_user
+      - MYSQL_PASSWORD=fa_password
+    ports:
+      - "3306:3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "fa_user", "-pfa_password"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+# To automate setup, run:
+# docker-compose exec web /var/www/html/docker/setup.sh
+
+volumes:
+  db_data:
