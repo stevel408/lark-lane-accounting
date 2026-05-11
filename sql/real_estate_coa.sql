@@ -245,6 +245,14 @@ INSERT INTO `0_chart_master` VALUES
 ('4500', '', 'Prompt Payment Discounts', '9', '0'),
 ('4510', '', 'Discounts Given', '9', '0'),
 ('5010', '', 'Cost of Goods Sold - Retail', '10', '0'),
+('5070', '', 'Contractor Materials', '10', '0'),
+('5080', '', 'Contractor Labor/Fees', '10', '0'),
+('5090', '', 'Permits and Licenses', '10', '0'),
+('6010', '', 'Real Estate Commissions', '13', '0'),
+('6020', '', 'Property Taxes (Project)', '12', '0'),
+('6030', '', 'Property Insurance (Project)', '12', '0'),
+('6040', '', 'Property Utilities (Project)', '12', '0'),
+('6050', '', 'Legal/Closing Costs (Project)', '12', '0'),
 ('5020', '', 'Material Usage Varaiance', '10', '0'),
 ('5030', '', 'Consumable Materials', '10', '0'),
 ('5040', '', 'Purchase price Variance', '10', '0'),
@@ -310,7 +318,8 @@ INSERT INTO `0_chart_types` VALUES
 ('9', 'Other Revenue', '3', '', '0'),
 ('10', 'Cost of Goods Sold', '4', '', '0'),
 ('11', 'Payroll Expenses', '4', '', '0'),
-('12', 'General &amp; Administrative expenses', '4', '', '0');
+('12', 'General &amp; Administrative expenses', '4', '', '0'),
+('13', 'Selling Expenses', '4', '', '0');
 
 -- Structure of table `0_comments` --
 
