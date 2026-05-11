@@ -10,8 +10,9 @@ $db_host = 'db';
 $db_user = 'fa_user';
 $db_pass = 'fa_password';
 $db_name = 'frontacc';
-$company_name = 'FrontAccounting Demo';
-$admin_password = 'password';
+$company_name = getenv('FA_COMPANY_NAME') ?: 'FrontAccounting Demo';
+$admin_password = getenv('FA_ADMIN_PASSWORD') ?: 'password';
+$sql_template = getenv('FA_SQL_TEMPLATE') ?: 'en_US-new.sql';
 
 // Setup environment
 if (!defined('TB_PREF')) define('TB_PREF', '0_');
@@ -45,7 +46,7 @@ if (!$db) {
 
 echo "Database connected. Encoding: " . db_get_charset($db) . "\n";
 
-$sql_file = $path_to_root . '/sql/en_US-new.sql';
+$sql_file = $path_to_root . '/sql/' . $sql_template;
 echo "Importing schema from $sql_file...\n";
 
 // We'll wrap db_import to capture errors and be more verbose

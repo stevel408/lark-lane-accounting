@@ -10,6 +10,7 @@ services:
       - ./docker/php.ini:/usr/local/etc/php/conf.d/frontaccounting.ini
     environment:
       - TZ=UTC
+      - FA_SQL_TEMPLATE=real_estate_coa.sql
     depends_on:
       - db
 
