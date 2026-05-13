@@ -1,0 +1,27 @@
+[
+  {
+    "date": "05/11/2026",
+    "reference": "PURCH-001",
+    "memo": "Property Purchase - Closing Statement",
+    "lines": [
+      { "account": "1810", "amount": 2500000.0, "memo": "Purchase Price" },
+      { "account": "6020", "amount": 790.86, "memo": "Tax Proration" },
+      { "account": "6045", "amount": 264.45, "memo": "HOA Dues + Proration" },
+      { "account": "6050", "amount": 436.3, "memo": "Title & Escrow Fees" },
+      { "account": "6055", "amount": 325.0, "memo": "Recording & Gov Fees" },
+      { "account": "6015", "amount": -1130.0, "memo": "Listing Agent Credit" },
+      {
+        "account": "2680",
+        "amount": -1250500.0,
+        "memo": "Loan: Bin"
+      },
+      { "account": "2681", "amount": -37500.0, "memo": "Loan: Steven" },
+      { "account": "2681", "amount": -100012.0, "memo": "Loan: Steven" },
+      {
+        "account": "1060",
+        "amount": -1112674.61,
+        "memo": "Cash to Close (Adjusted for Balance)"
+      }
+    ]
+  }
+]

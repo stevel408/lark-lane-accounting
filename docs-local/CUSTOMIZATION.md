@@ -22,9 +22,9 @@ The customized COA is located in `sql/real_estate_coa.sql`. It includes:
     *   `6055`: Recording & Gov Fees
 
 ### Liability Accounts (Partner Funding)
-*   `2680`: Loans from Bin Zhou/Beini Ouyang
-*   `2681`: Loans from Steven Li Living Trust
-*   `2682`: Loans from OHANA INVESTMENTS LLC
+*   `2680`: Loans from Bin
+*   `2681`: Loans from Steven
+*   `2682`: Placeholder
 
 ## Fixed Assets
 A new Fixed Asset Class **"Property Re-development"** (`RE_DEV`) has been added.

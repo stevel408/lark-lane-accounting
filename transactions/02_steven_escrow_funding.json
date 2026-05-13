@@ -1,0 +1,19 @@
+[
+  {
+    "date": "05/11/2026",
+    "reference": "FUND-001",
+    "memo": "Steven funding remaining balance to close escrow",
+    "lines": [
+      {
+        "account": "1060",
+        "amount": 1113499.61,
+        "memo": "Cash received for escrow closing"
+      },
+      {
+        "account": "2681",
+        "amount": -1113499.61,
+        "memo": "Loan from Steven"
+      }
+    ]
+  }
+]
