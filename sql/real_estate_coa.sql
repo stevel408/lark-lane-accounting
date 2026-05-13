@@ -649,7 +649,8 @@ CREATE TABLE `0_fiscal_year` (
 -- Data of table `0_fiscal_year` --
 
 INSERT INTO `0_fiscal_year` VALUES
-('1', '2021-01-01', '2021-12-31', '1');
+('1', '2021-01-01', '2021-12-31', '1'),
+('2', '2026-01-01', '2026-12-31', '0');
 
 -- Structure of table `0_gl_trans` --
 
