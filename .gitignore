@@ -14,7 +14,7 @@
 !/themes/cool
 !/lang/en_US
 !/lang/new_language_template
-installed_languages.inc
+/lang/*/installed_languages.inc
 installed_extensions.php
 config.php
 config_db.php
