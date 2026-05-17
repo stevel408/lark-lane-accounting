@@ -24,7 +24,6 @@ config_db.php
 .docker_id
 
 # Generated files
-/install_bak
 /company/*/js_cache/*
 /tmp/errors.log
 /tmp/*.log

@@ -12,7 +12,7 @@ This document records the technical hurdles and discoveries made during the setu
 
 ## 3. Session & Security Mocking
 **Discovery**: Much of FrontAccounting's logic is tightly coupled to the `$_SESSION` global and the `items_cart` class.
-**Solution**: To run CLI scripts, we must include `install/isession.inc` (or a backup location) to set up a minimal session environment. We also need to manually define missing globals like `$installed_extensions` and mock the `wa_current_user` object with appropriate access levels.
+**Solution**: To run CLI scripts, we include `install_custom/isession.inc` to set up a minimal session environment without restoring the live `install/` directory. We also need to manually define missing globals like `$installed_extensions` and mock the `wa_current_user` object with appropriate access levels.
 
 ## 4. HTTPS/SSL Requirements
 **Discovery**: FrontAccounting has a `SECURE_ONLY` flag in `includes/session.inc` that defaults to `true`.

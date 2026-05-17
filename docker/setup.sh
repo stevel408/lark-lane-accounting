@@ -23,12 +23,5 @@ exit(1);
 echo "Database is ready. Running FrontAccounting installation script..."
 php /var/www/html/docker/install.php
 
-echo "Cleaning up..."
-# The README recommends removing/renaming the install folder
-if [ -d "/var/www/html/install" ]; then
-    mv /var/www/html/install /var/www/html/install_bak
-    echo "Renamed 'install' folder to 'install_bak'"
-fi
-
 echo "Done! You can now access FrontAccounting at http://localhost:8080"
 echo "Login: admin / password"

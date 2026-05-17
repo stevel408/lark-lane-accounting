@@ -10,15 +10,15 @@ $db_host = 'db';
 $db_user = 'fa_user';
 $db_pass = 'fa_password';
 $db_name = 'frontacc';
-$company_name = getenv('FA_COMPANY_NAME') ?: 'FrontAccounting Demo';
+$company_name = getenv('FA_COMPANY_NAME') ?: 'Lark Lane Renovation';
 $admin_password = getenv('FA_ADMIN_PASSWORD') ?: 'password';
 $sql_template = getenv('FA_SQL_TEMPLATE') ?: 'en_US-new.sql';
 
 // Setup environment
 if (!defined('TB_PREF')) define('TB_PREF', '0_');
 
-// Include FA installation session handler
-require_once($path_to_root . "/install/isession.inc");
+// Include the installer session handler from our stable local support copy.
+require_once($path_to_root . "/install_custom/isession.inc");
 
 // Include additional required FA files
 require_once($path_to_root . "/includes/db/connect_db.inc");
@@ -33,8 +33,17 @@ $connection = array(
     'dbpassword' => $db_pass,
     'dbname' => $db_name,
     'collation' => 'utf8_unicode_ci',
-    'tbpref' => '',
+    'tbpref' => '0_',
     'name' => $company_name
+);
+
+// db_query() rewrites the TB_PREF placeholder using this global connection list.
+// Set it before importing so FrontAccounting keeps the 0_ table prefix.
+global $def_coy, $db_connections, $tb_pref_counter;
+$def_coy = 0;
+$tb_pref_counter = 0;
+$db_connections = array(
+    0 => $connection
 );
 
 echo "Connecting to database...\n";
@@ -52,19 +61,19 @@ echo "Importing schema from $sql_file...\n";
 // We'll wrap db_import to capture errors and be more verbose
 function debug_db_import($filename, $connection) {
     global $db;
-    
+
     // Explicitly check if file exists and is readable
     if (!is_readable($filename)) {
         echo "Error: SQL file is not readable.\n";
         return false;
     }
-    
+
     $lines = file($filename);
     echo "Total lines in SQL file: " . count($lines) . "\n";
-    
+
     // We'll use the original db_import but with $return_errors = true
     $result = db_import($filename, $connection, true, true, false, true);
-    
+
     if (is_array($result)) {
         echo "SQL Import encountered errors:\n";
         foreach ($result as $err) {
@@ -88,7 +97,7 @@ if (!debug_db_import($sql_file, $connection)) {
 $res = db_query("SHOW TABLES LIKE '0_users'");
 if (db_num_rows($res) == 0) {
     echo "CRITICAL ERROR: 0_users table was NOT created even though import reported success!\n";
-    
+
     // Let's try to list all tables
     $res = db_query("SHOW TABLES");
     echo "Tables in database:\n";
@@ -127,17 +136,17 @@ if (!file_exists($path_to_root . "/config.php")) {
     }
 }
 
-// Prepare for write_config_db
-global $def_coy, $db_connections, $tb_pref_counter;
-$def_coy = 0;
-$tb_pref_counter = 0;
-$db_connections = array(
-    0 => $connection
-);
-
 $res = write_config_db(false);
 if ($res != 0) {
     die("Error: Could not write config_db.php (Code: $res)\n");
+}
+
+echo "Writing extension registry...\n";
+global $installed_extensions, $next_extension_id;
+$installed_extensions = array();
+$next_extension_id = 1;
+if (!write_extensions($installed_extensions)) {
+    die("Error: Could not write installed_extensions.php\n");
 }
 
 echo "Installation complete!\n";

@@ -12,9 +12,8 @@ $_SERVER['REMOTE_ADDR'] = '127.0.0.1';
 // Setup basic constants
 if (!defined('TB_PREF')) define('TB_PREF', '0_');
 
-// Initialize FA environment
-$install_dir = is_dir($path_to_root . "/install") ? "install" : "install_bak";
-require_once($path_to_root . "/$install_dir/isession.inc");
+// Initialize FA environment using the stable local installer support copy.
+require_once($path_to_root . "/install_custom/isession.inc");
 
 // Load configuration
 if (!file_exists($path_to_root . "/config.php") || !file_exists($path_to_root . "/config_db.php")) {

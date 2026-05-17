@@ -35,5 +35,13 @@ The importer script automates the creation of Journal Entries.
 
 ### Usage
 ```bash
-docker-compose exec web php /var/www/html/docker/import.php /var/www/html/transactions/01_closing_statement.json
+docker compose exec web php /var/www/html/docker/import.php /var/www/html/transactions/01_closing_statement.json
 ```
+
+To import all prepared transaction files in filename order:
+
+```bash
+docker compose exec web /var/www/html/docker/import_all.sh
+```
+
+Use the all-file importer after a fresh local reset. The importer creates journal entries and does not currently skip transactions that were already imported.
