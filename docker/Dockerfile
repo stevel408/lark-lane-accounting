@@ -23,6 +23,18 @@ RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
 # Enable Apache modules
 RUN a2enmod rewrite
 
-# The application files will be mounted via volume for development,
-# but we set the working directory.
 WORKDIR /var/www/html
+
+COPY . /var/www/html
+
+RUN chmod +x /var/www/html/docker/railway-entrypoint.sh \
+    && mkdir -p /var/www/html/company/0/backup \
+        /var/www/html/company/0/images \
+        /var/www/html/company/0/js_cache \
+        /var/www/html/company/0/pdf_files \
+        /var/www/html/company/0/reporting \
+        /var/www/html/tmp \
+    && chown -R www-data:www-data /var/www/html/company /var/www/html/tmp
+
+ENTRYPOINT ["sh", "/var/www/html/docker/railway-entrypoint.sh"]
+CMD ["apache2-foreground"]

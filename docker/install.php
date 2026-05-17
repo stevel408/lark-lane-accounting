@@ -5,11 +5,14 @@ ini_set('display_errors', 1);
 // Use absolute path relative to this script to avoid CWD issues
 $path_to_root = realpath(__DIR__ . "/..");
 
-// FrontAccounting installation variables - matches docker-compose.yml
-$db_host = 'db';
-$db_user = 'fa_user';
-$db_pass = 'fa_password';
-$db_name = 'frontacc';
+require_once(__DIR__ . "/runtime_config.php");
+
+// FrontAccounting installation variables.
+$db_host = $connection['host'];
+$db_port = $connection['port'];
+$db_user = $connection['dbuser'];
+$db_pass = $connection['dbpassword'];
+$db_name = $connection['dbname'];
 $company_name = getenv('FA_COMPANY_NAME') ?: 'Lark Lane Renovation';
 $admin_password = getenv('FA_ADMIN_PASSWORD') ?: 'password';
 $sql_template = getenv('FA_SQL_TEMPLATE') ?: 'en_US-new.sql';
@@ -28,7 +31,7 @@ require_once($path_to_root . "/admin/db/users_db.inc");
 
 $connection = array(
     'host' => $db_host,
-    'port' => '3306',
+    'port' => $db_port,
     'dbuser' => $db_user,
     'dbpassword' => $db_pass,
     'dbname' => $db_name,

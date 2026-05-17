@@ -1,0 +1,14 @@
+.git
+.codex
+company/*/attachments
+company/*/backup/*.sql
+company/*/backup/*.sql.gz
+company/*/pdf_files/*.pdf
+company/*/js_cache/*
+company/*/reporting
+company/*/images
+tmp
+config.php
+config_db.php
+installed_extensions.php
+.docker_id
