@@ -23,5 +23,5 @@ exit(1);
 echo "Database is ready. Running FrontAccounting installation script..."
 php /var/www/html/docker/install.php
 
-echo "Done! You can now access FrontAccounting at http://localhost:8080"
+echo "Done! You can now access FrontAccounting at http://localhost:8081"
 echo "Login: admin / password"

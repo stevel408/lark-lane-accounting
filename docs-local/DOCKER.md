@@ -6,7 +6,7 @@ The environment is designed to provide a robust, consistent local setup on macOS
 
 ### `web` (Apache + PHP 7.4)
 *   **Base Image**: `php:7.4-apache`
-*   **Port**: `8080` (External) -> `80` (Internal)
+*   **Port**: `8081` (External) -> `80` (Internal)
 *   **PHP Extensions**: `mysqli`, `gd`, `gettext`, `zip`, `intl`.
 *   **Volumes**:
     *   `.` (Project root) -> `/var/www/html`

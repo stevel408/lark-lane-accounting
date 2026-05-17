@@ -37,7 +37,7 @@ docker compose exec web /var/www/html/docker/setup.sh
 docker compose exec web /var/www/html/docker/import_all.sh
 ```
 
-After setup finishes, log in at `http://localhost:8080` with `admin / password`.
+After setup finishes, log in at `http://localhost:8081` with `admin / password`.
 
 Transaction replay is intended for a freshly reset database. Re-running it against an already imported database can create duplicate journal entries.
 

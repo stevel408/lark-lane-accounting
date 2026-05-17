@@ -16,7 +16,7 @@ This document records the technical hurdles and discoveries made during the setu
 
 ## 4. HTTPS/SSL Requirements
 **Discovery**: FrontAccounting has a `SECURE_ONLY` flag in `includes/session.inc` that defaults to `true`.
-**Solution**: For local development on port 8080 (non-HTTPS), this must be set to `false` to avoid redirects or blank pages.
+**Solution**: For local development on port 8081 (non-HTTPS), this must be set to `false` to avoid redirects or blank pages.
 
 ## 5. Fiscal Year Constraints
 **Discovery**: Transactions will be rejected by the audit trail if a valid Fiscal Year does not exist for the transaction date.

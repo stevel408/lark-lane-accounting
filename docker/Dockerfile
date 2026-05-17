@@ -20,8 +20,10 @@ RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
     zip \
     intl
 
-# Enable Apache modules
-RUN a2enmod rewrite
+# FrontAccounting runs through mod_php, which requires prefork. Make the MPM
+# choice explicit so platform builders do not leave event/worker enabled too.
+RUN a2dismod mpm_event mpm_worker || true \
+    && a2enmod mpm_prefork rewrite
 
 WORKDIR /var/www/html
 

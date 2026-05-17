@@ -28,4 +28,4 @@ Expected result:
 * `tables_count` is greater than zero, currently about `80`.
 * `config_db.php` contains `'tbpref' => '0_'`.
 
-If the browser still shows the blank page after setup succeeds, clear cookies for `localhost:8080` or open a private window to discard the old broken session.
+If the browser still shows the blank page after setup succeeds, clear cookies for `localhost:8081` or open a private window to discard the old broken session.
