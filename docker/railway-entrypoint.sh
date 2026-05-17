@@ -19,13 +19,16 @@ chown -R www-data:www-data /var/www/html/company /var/www/html/tmp
 
 php /var/www/html/docker/wait_for_db.php
 
-if [ "${FA_AUTO_SETUP:-0}" = "1" ]; then
-    if php /var/www/html/docker/db_has_schema.php; then
-        echo "Skipping setup; schema is already installed."
-    else
-        echo "Installing FrontAccounting schema..."
-        php /var/www/html/docker/install.php
-    fi
+if php /var/www/html/docker/db_has_schema.php; then
+    echo "Skipping setup; schema is already installed."
+elif [ "${FA_AUTO_SETUP:-0}" = "1" ]; then
+    echo "Installing FrontAccounting schema because FA_AUTO_SETUP=1..."
+    php /var/www/html/docker/install.php
+    php /var/www/html/docker/db_has_schema.php
+else
+    echo "Error: FrontAccounting schema is missing and FA_AUTO_SETUP is not set to 1." >&2
+    echo "Set FA_AUTO_SETUP=1 for the first deploy, then set it back to 0 after setup succeeds." >&2
+    exit 1
 fi
 
 exec apache2-foreground

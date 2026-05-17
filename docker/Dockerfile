@@ -20,6 +20,8 @@ RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
     zip \
     intl
 
+COPY docker/php.ini /usr/local/etc/php/conf.d/frontaccounting.ini
+
 # FrontAccounting runs through mod_php, which requires prefork. Make the MPM
 # choice explicit so platform builders do not leave event/worker enabled too.
 RUN a2dismod mpm_event mpm_worker || true \

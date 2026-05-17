@@ -11,7 +11,7 @@ Create two Railway services in one project:
 
 Railway will build the web service with `docker/Dockerfile`. The container entrypoint writes `config.php`, `config_db.php`, and `installed_extensions.php` at runtime from environment variables, waits for the database, and starts Apache.
 
-Railway does not run `docker/setup.sh` during deployment. That script is for local Docker Compose setup. In Railway, initialization is handled by `docker/railway-entrypoint.sh`: when `FA_AUTO_SETUP=1`, it checks whether the FrontAccounting schema exists and runs `docker/install.php` only if the schema is missing.
+Railway does not run `docker/setup.sh` during deployment. That script is for local Docker Compose setup. In Railway, initialization is handled by `docker/railway-entrypoint.sh`: it checks whether the FrontAccounting schema exists, runs `docker/install.php` only when `FA_AUTO_SETUP=1` and the schema is missing, and otherwise exits with a clear error instead of serving an empty app.
 
 ## Web Service Variables
 
@@ -60,6 +60,20 @@ Do not mount a volume over `/var/www/html`; that would hide the application code
 5. Watch the first web deploy logs. You should see the database become reachable and the FrontAccounting schema install.
 6. Open the Railway domain and log in as `admin` using `FA_ADMIN_PASSWORD`.
 7. Set `FA_AUTO_SETUP=0` and redeploy.
+
+Expected first-deploy log lines:
+
+```text
+Runtime config written for database ...
+Database is reachable.
+FrontAccounting schema not found.
+Installing FrontAccounting schema because FA_AUTO_SETUP=1...
+Importing schema from /var/www/html/sql/real_estate_coa.sql...
+Installation complete!
+FrontAccounting schema already exists.
+```
+
+If the app deploys but the page is blank or empty, check the web service variables first. Most commonly `FA_AUTO_SETUP=1` was not set on the web service during the first deploy, so the database tables and chart of accounts were never imported.
 
 ## Importing Prepared Transactions
 
