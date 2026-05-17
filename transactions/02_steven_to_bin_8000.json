@@ -1,0 +1,19 @@
+[
+  {
+    "date": "05/3/2026",
+    "reference": "CONS-001",
+    "memo": "Steven to Bin: construction cost advance",
+    "lines": [
+      {
+        "account": "2685",
+        "amount": 8000,
+        "memo": "Steven to Bin: construction cost advance"
+      },
+      {
+        "account": "2686",
+        "amount": -8000.00,
+        "memo": "Steven to Bin: construction cost advance"
+      }
+    ]
+  }
+]

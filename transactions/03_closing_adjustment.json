@@ -1,0 +1,14 @@
+[
+  {
+    "date": "05/3/2026",
+    "reference": "CONS-001",
+    "memo": "Steven to Bin: construction cost advance",
+    "lines": [
+      {"account": "2680", "amount": -64.50, "memo": "Bin apply closing refud to construction"},
+      {"account": "2685", "amount": 64.50, "memo": "Bin apply closing refud to construction"},
+
+      {"account": "2681", "amount": 447.11, "memo": "Steven applying closing refund to construction"},
+      {"account": "2686", "amount": -447.11, "memo": "Steven applying closing refund to construction"}
+    ]
+  }
+]

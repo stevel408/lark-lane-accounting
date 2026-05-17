@@ -5,23 +5,24 @@
     "memo": "Property Purchase - Closing Statement",
     "lines": [
       { "account": "1810", "amount": 2500000.0, "memo": "Purchase Price" },
-      { "account": "6020", "amount": 790.86, "memo": "Tax Proration" },
-      { "account": "6045", "amount": 264.45, "memo": "HOA Dues + Proration" },
-      { "account": "6050", "amount": 436.3, "memo": "Title & Escrow Fees" },
-      { "account": "6055", "amount": 325.0, "memo": "Recording & Gov Fees" },
+      { "account": "2680", "amount": -37500.0, "memo": "Deposit from Bin" },
+      { "account": "2681", "amount": -37500.0, "memo": "Deposit from Steven" },
+      { "account": "2680", "amount": -500000.0, "memo": "First wire from Bin" },
+      { "account": "2681", "amount": -100012.0, "memo": "First wire from Steven" },
+      { "account": "2680", "amount": -713000.0, "memo": "Second wire from Bin" },
+      { "account": "2681", "amount": -1113499.61, "memo": "Second wire from Steven" },
+
       { "account": "6015", "amount": -1130.0, "memo": "Listing Agent Credit" },
-      {
-        "account": "2680",
-        "amount": -1250500.0,
-        "memo": "Loan: Bin"
-      },
-      { "account": "2681", "amount": -37500.0, "memo": "Loan: Steven" },
-      { "account": "2681", "amount": -100012.0, "memo": "Loan: Steven" },
-      {
-        "account": "1060",
-        "amount": -1112674.61,
-        "memo": "Cash to Close (Adjusted for Balance)"
-      }
+
+      { "account": "6020", "amount": 790.86, "memo": "Tax Proration" },
+      { "account": "6045", "amount": 170.00, "memo": "HOA Dues, 3rd Quarter" },
+      { "account": "6045", "amount": 94.45, "memo": "HOA Proration" },
+      { "account": "6050", "amount": 411.30, "memo": "Title charges" },
+      { "account": "6050", "amount": 21.00, "memo": "Recording fees" },
+      { "account": "6050", "amount": 25.00, "memo": "Recording service fee" },
+
+      { "account": "2680", "amount": 564.50, "memo": "Refund check to Bin" },
+      { "account": "2681", "amount": 564.50, "memo": "Refund check to Steven" }
     ]
   }
 ]
